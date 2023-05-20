@@ -3,11 +3,11 @@ if (canquit == 1)
     if (quit > 20)
         game_end()
 }
-if ((((global.seed * 214013) + 2531011) >> 16) != global.stateIndex)
+if (((((global.seed * 214013) + 2531011) >> 16) & 65535) != global.stateIndex)
 {
     global.otherLastState = global.lastState
     global.lastState = global.stateIndex
-    global.stateIndex = (((global.seed * 214013) + 2531011) >> 16)
+    global.stateIndex = ((((global.seed * 214013) + 2531011) >> 16) & 65535)
     global.otherLastTimer = global.lastTimer
     global.lastTimer = global.timer
     appendFile = file_text_open_append("states.txt")
