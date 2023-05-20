@@ -62,7 +62,7 @@ def seedToState(seed):
 
     """
     # The state index correlates to the seed like this:
-    stateIndex = ((seed * 0x343FD) + 0x269EC3) >> 0x10
+    stateIndex = (((seed * 0x343FD) + 0x269EC3) >> 0x10) & 0xFFFF
 
     return stateIndex
 
