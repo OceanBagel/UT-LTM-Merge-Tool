@@ -1015,3 +1015,7 @@ When you have finished this step, enter the file path to the states.txt file bel
         mergeLibtasFiles(firstFilePath, secondFilePath, outputFilePath)
 
         repeatYN = input("\nMerge completed successfully! Enter Y to perform the merge process again or anything else to exit: ")
+
+
+if __name__ == "__main__":
+    mergingProcess()
