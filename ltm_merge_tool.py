@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from tarfile import open as topen
 import configparser
 import os
