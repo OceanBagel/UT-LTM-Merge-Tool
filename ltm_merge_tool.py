@@ -2,6 +2,10 @@ from tarfile import open as topen
 import configparser
 import os
 import shutil
+from numpy import int32,uint32,longlong,ulonglong,seterr
+
+# Ignore all numpy warnings, can be interactively changed
+seterr(all='ignore')
 
 def randomizeMicrosState(micros):
     """
@@ -31,20 +35,14 @@ def randomizeMicrosSeed(micros):
         int: The RNG seed for the input microseconds.
 
     """
-    timeOffset = 0
+    # 64-bit time
+    timeVariable64 = longlong(micros)
 
-    # This can be up to 64 bits
-    timeVariable = micros + timeOffset
-
-    # We also need the lower 32 bits of timeVariable
-    timeVariable32 = timeVariable & 0xFFFFFFFF
+    # 32-bit time
+    timeVariable32 = uint32(timeVariable64)
 
     # This is the formula used by randomize() to calculate the RNG seed.
-    seed = (timeVariable32 * 0x10000 | timeVariable32 >> 0x10) ^\
-        ((timeVariable >> 0x20) + timeVariable32)
-
-    # The true seed is only the lower 32 bits of the calculated value.
-    seed = seed & 0xFFFFFFFF
+    seed = (timeVariable32 * uint32(0x10000) | timeVariable32 >> uint32(0x10)) ^ int32(ulonglong(timeVariable64) >> uint32(0x20)) + timeVariable32
 
     return seed
 
